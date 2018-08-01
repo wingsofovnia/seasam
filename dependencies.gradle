@@ -1,0 +1,65 @@
+ext {
+    ver = [
+        kotlin: '1.2.51',
+
+        jvm: '1.8',
+
+        spring: [
+            boot: '2.0.4.RELEASE',
+        ],
+
+        mongodb: [
+            inmemory: '2.1.1',
+        ],
+
+        test: [
+            junit: [
+                jupiter: '5.1.0',
+                gradlePlugin: '1.1.1',
+            ],
+            mockk: '1.7.15',
+        ],
+    ]
+
+    plg = [
+        kotlin: [
+            gradle: "org.jetbrains.kotlin:kotlin-gradle-plugin:${ver.kotlin}",
+            allopen: "org.jetbrains.kotlin:kotlin-allopen:${ver.kotlin}",
+        ],
+
+        spring: [
+            boot: "org.springframework.boot:spring-boot-gradle-plugin:${ver.spring.boot}",
+        ],
+    ]
+
+    lib = [
+        kotlin: [
+            std: 'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            reflect: 'org.jetbrains.kotlin:kotlin-reflect',
+        ],
+
+        spring: [
+            boot: [
+                webflux: "org.springframework.boot:spring-boot-starter-webflux:${ver.spring.boot}",
+                mongodb: "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${ver.spring.boot}",
+            ],
+        ],
+
+        mongodb: [
+            inmemory: "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${ver.mongodb.inmemory}",
+        ],
+
+        test: [
+            junit: [
+                jupiter: [
+                    api: "org.junit.jupiter:junit-jupiter-api:${ver.test.junit.jupiter}",
+                    engine: "org.junit.jupiter:junit-jupiter-engine:${ver.test.junit.jupiter}",
+                ],
+            ],
+            spring: [
+                boot: "org.springframework.boot:spring-boot-starter-test:${ver.spring.boot}",
+            ],
+            mockk: "io.mockk:mockk:${ver.test.mockk}",
+        ]
+    ]
+}

@@ -1,0 +1,13 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    implementation lib.spring.boot.webflux
+
+    testImplementation lib.test.spring.boot
+}
+
+bootJar {
+    manifest {
+        attributes 'Implementation-Version': version
+    }
+}

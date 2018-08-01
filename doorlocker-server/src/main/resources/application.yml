@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: seasam-doorlocker
+
+  output.ansi.enabled: ALWAYS
