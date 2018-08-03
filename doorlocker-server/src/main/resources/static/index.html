@@ -1,0 +1,25 @@
+<html>
+<body>
+
+<!-- Save new data -->
+<form method="get" action="/save">
+    <input type="text" name="surname">
+    <button type="submit">Save new user</button>
+</form>
+
+
+<!-- Receive saved data -->
+<div id="content"></div>
+
+<script>
+    let source = new EventSource("save");
+    source.addEventListener('message', function (e) {
+        console.log('New message is received');
+        const index = JSON.parse(e.data);
+        const content = `New user added: ${index.surname}<br>`;
+        document.getElementById("content").innerHTML += content;
+    }, false);
+
+</script>
+</body>
+</html>

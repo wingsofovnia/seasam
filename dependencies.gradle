@@ -37,11 +37,11 @@ ext {
             std: 'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
             reflect: 'org.jetbrains.kotlin:kotlin-reflect',
         ],
-
         spring: [
             boot: [
                 webflux: "org.springframework.boot:spring-boot-starter-webflux:${ver.spring.boot}",
                 mongodb: "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${ver.spring.boot}",
+                web:"org.springframework.boot:spring-boot-starter-web:${ver.spring.boot}"
             ],
         ],
 
@@ -60,6 +60,6 @@ ext {
                 boot: "org.springframework.boot:spring-boot-starter-test:${ver.spring.boot}",
             ],
             mockk: "io.mockk:mockk:${ver.test.mockk}",
-        ]
+        ],
     ]
 }

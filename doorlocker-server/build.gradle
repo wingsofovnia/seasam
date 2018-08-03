@@ -2,6 +2,10 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     implementation lib.spring.boot.webflux
+    implementation lib.spring.boot.mongodb
+    implementation lib.spring.boot.web
+    implementation lib.mongodb.inmemory
+
 
     testImplementation lib.test.spring.boot
 }
