@@ -1,4 +1,4 @@
-package com.seasam.doorlocker.server
+package com.seasam.doorlocker
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

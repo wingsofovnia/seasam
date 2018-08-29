@@ -1,8 +1,10 @@
 ext {
     ver = [
-        kotlin: '1.2.51',
+        kotlin: '1.2.61',
 
         jvm: '1.8',
+
+        jbcrypt: '0.4',
 
         spring: [
             boot: '2.0.4.RELEASE',
@@ -18,6 +20,7 @@ ext {
                 gradlePlugin: '1.1.1',
             ],
             mockk: '1.7.15',
+            mongoEmbedded: '2.0.3',
         ],
     ]
 
@@ -38,6 +41,8 @@ ext {
             reflect: 'org.jetbrains.kotlin:kotlin-reflect',
         ],
 
+        jbcrypt: "org.mindrot:jbcrypt:${ver.jbcrypt}",
+
         spring: [
             boot: [
                 webflux: "org.springframework.boot:spring-boot-starter-webflux:${ver.spring.boot}",
@@ -57,7 +62,10 @@ ext {
                 ],
             ],
             spring: [
-                boot: "org.springframework.boot:spring-boot-starter-test:${ver.spring.boot}",
+                boot: [
+                    "org.springframework.boot:spring-boot-starter-test:${ver.spring.boot}",
+                    "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${ver.test.mongoEmbedded}",
+                ],
             ],
             mockk: "io.mockk:mockk:${ver.test.mockk}",
         ]

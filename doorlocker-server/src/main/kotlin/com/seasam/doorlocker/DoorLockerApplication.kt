@@ -1,4 +1,4 @@
-package com.seasam.doorlocker.server
+package com.seasam.doorlocker
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
