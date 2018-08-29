@@ -1,3 +1,7 @@
 package com.seasam.doorlocker.domain
 
-data class Device(val name: String, val signature: String)
+import java.security.PublicKey
+
+data class Device(
+    val name: String,
+    val key: PublicKey)
