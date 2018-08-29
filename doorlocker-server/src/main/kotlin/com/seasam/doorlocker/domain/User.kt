@@ -1,9 +1,7 @@
 package com.seasam.doorlocker.domain
 
 import com.seasam.doorlocker.domain.credentials.UsernamePasswordCredentials
-import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.util.*
 import javax.validation.constraints.NotBlank
 
 @Document
@@ -11,15 +9,24 @@ class User(
     val id: UserId = UserId(),
     @NotBlank var name: String,
     @NotBlank var email: String,
-    var credentials: UsernamePasswordCredentials) {
+    var credentials: UsernamePasswordCredentials,
+    devices: Set<Device> = setOf(),
+    permissions: Set<Permission> = setOf()) {
 
-    private val _devices: MutableSet<Device> = mutableSetOf()
-    val devices: Set<Device> get() = _devices.toSet()
-    fun addDevice(device: Device) = _devices.add(device)
+    private val devices: MutableSet<Device> = mutableSetOf()
+    val allDevices: Set<Device> get() = devices.toSet()
 
-    private val _permission: MutableSet<Permission> = mutableSetOf()
-    val permission: Set<Permission> get() = _permission.toSet()
-    fun addPermission(permission: Permission) = _permission.add(permission)
+    private val permissions: MutableSet<Permission> = mutableSetOf()
+    val allPermissions: Set<Permission> get() = permissions.toSet()
+
+    init {
+        this.devices.addAll(devices)
+        this.permissions.addAll(permissions)
+    }
+
+    fun addDevice(device: Device) = devices.add(device)
+
+    fun addPermission(permission: Permission) = permissions.add(permission)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

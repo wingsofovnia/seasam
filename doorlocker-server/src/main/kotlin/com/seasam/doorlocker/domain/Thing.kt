@@ -9,13 +9,14 @@ class Thing(
     @NotBlank var name: String,
     accesses: Set<Access> = setOf()) {
 
-    private val _accesses: MutableSet<Access> = mutableSetOf()
-    val accesses: Set<Access> = _accesses.toSet()
-    fun recordAccess(access: Access) = _accesses.add(access)
+    private val accesses: MutableSet<Access> = mutableSetOf()
+    val allAccesses: Set<Access> = accesses.toSet()
 
     init {
-        this._accesses.addAll(accesses)
+        this.accesses.addAll(accesses)
     }
+
+    fun recordAccess(access: Access) = accesses.add(access)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
