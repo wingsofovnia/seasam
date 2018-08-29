@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 
 @Document
 class User(
-    @Id val id: UUID = UUID.randomUUID(),
+    val id: UserId = UserId(),
     @NotBlank var name: String,
     @NotBlank var email: String,
     var credentials: UsernamePasswordCredentials) {
