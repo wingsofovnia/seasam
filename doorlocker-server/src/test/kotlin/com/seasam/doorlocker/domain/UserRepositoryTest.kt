@@ -1,6 +1,5 @@
 package com.seasam.doorlocker.domain
 
-import com.seasam.doorlocker.domain.credentials.UsernamePasswordCredentials
 import com.seasam.doorlocker.domain.credentials.password.Password
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -22,11 +21,10 @@ internal class UserRepositoryTest {
     fun `UserRepository#findByUsernameAndPassword ~ User with given username & password`() {
         val email = "email"
         val password = Password.create("ololo")
-        val expectedUser = User(credentials = UsernamePasswordCredentials(username = email,
-            password = password), email = "email", name = "Name")
+        val expectedUser = User(password = password, email = email, name = "Name")
         repo.save(expectedUser).block()
 
-        val actualPassenger = repo.findByUsernameAndPassword(email, password).block()
+        val actualPassenger = repo.findByEmailAndPassword(email, password).block()
         Assertions.assertEquals(expectedUser, actualPassenger)
     }
 }

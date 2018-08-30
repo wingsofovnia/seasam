@@ -9,6 +9,6 @@ import reactor.core.publisher.Mono
 @Repository
 interface UserRepository : ReactiveCrudRepository<User, UserId> {
 
-    @Query("{ 'credentials.username' : ?#{#username}, 'credentials.password.hash' : ?#{#password.hash}  }")
-    fun findByUsernameAndPassword(username: String, password: Password): Mono<User>
+    @Query("{ 'email' : ?#{#email}, 'password.hash' : ?#{#password.hash}  }")
+    fun findByEmailAndPassword(email: String, password: Password): Mono<User>
 }

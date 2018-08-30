@@ -1,6 +1,6 @@
 package com.seasam.doorlocker.domain
 
-import com.seasam.doorlocker.domain.credentials.UsernamePasswordCredentials
+import com.seasam.doorlocker.domain.credentials.password.Password
 import org.springframework.data.mongodb.core.mapping.Document
 import java.security.PublicKey
 import javax.validation.constraints.NotBlank
@@ -10,7 +10,7 @@ class User(
     val id: UserId = UserId(),
     @NotBlank var name: String,
     @NotBlank var email: String,
-    var credentials: UsernamePasswordCredentials,
+    val password: Password,
     devices: Set<Device> = setOf(),
     permissions: Set<Permission> = setOf()) {
 
