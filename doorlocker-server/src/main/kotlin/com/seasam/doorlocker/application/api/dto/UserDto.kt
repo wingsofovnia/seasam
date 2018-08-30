@@ -6,7 +6,7 @@ import com.seasam.doorlocker.domain.credentials.password.Password
 import javax.validation.constraints.NotBlank
 
 data class UserDto(
-    val id: UserId = UserId(),
+    val id: UserId?,
     @NotBlank val name: String,
     @NotBlank val email: String,
     val password: String?,
@@ -21,7 +21,7 @@ data class UserDto(
         fun from(u: Collection<User>) = u.map { from(it) }
     }
 
-    fun asUser() = User(id, name, email, Password.create(password!!),
+    fun asUser() = User(id ?: UserId(), name, email, Password.create(password!!),
         devices?.map { it.asDevice() }?.toSet() ?: setOf(),
         permissions?.map { it.asPermission() }?.toSet() ?: setOf())
 }

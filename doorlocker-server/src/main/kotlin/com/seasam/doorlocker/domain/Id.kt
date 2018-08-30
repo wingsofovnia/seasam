@@ -1,5 +1,6 @@
 package com.seasam.doorlocker.domain
 
+import com.fasterxml.jackson.annotation.JsonValue
 import java.io.Serializable
 import java.util.*
 
@@ -19,6 +20,7 @@ open class Id : Serializable {
         this.value = uuid
     }
 
+    @JsonValue
     override fun toString(): String {
         return value.toString()
     }
