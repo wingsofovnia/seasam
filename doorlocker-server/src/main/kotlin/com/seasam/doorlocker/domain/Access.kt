@@ -3,7 +3,7 @@ package com.seasam.doorlocker.domain
 import java.time.LocalDateTime
 
 data class Access(
-    val user: UserId,
+    val userId: UserId,
     val device: Device,
     val permission: Permission) {
 
