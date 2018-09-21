@@ -46,13 +46,13 @@ subprojects {
     sourceCompatibility = ver.jvm
     compileKotlin {
         kotlinOptions {
-            freeCompilerArgs = ["-Xjsr305=strict"]
+            freeCompilerArgs = ["-Xjsr305=strict", "-Xjvm-default=enable"]
             jvmTarget = ver.jvm
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            freeCompilerArgs = ["-Xjsr305=strict"]
+            freeCompilerArgs = ["-Xjsr305=strict", "-Xjvm-default=enable"]
             jvmTarget = ver.jvm
         }
     }
