@@ -10,9 +10,11 @@ class User(
     val id: UserId = UserId(),
     @NotBlank var name: String,
     @NotBlank var email: String,
-    val password: Password,
+    var password: Password,
     devices: Set<Device> = setOf(),
-    permissions: Set<Permission> = setOf()) {
+    permissions: Set<Permission> = setOf(),
+    var status: UserStatus = UserStatus.ACTIVE,
+    var role: UserRole = UserRole.USER) {
 
     private val devices: MutableSet<Device> = mutableSetOf()
     val allDevices: Set<Device> get() = devices.toSet()
