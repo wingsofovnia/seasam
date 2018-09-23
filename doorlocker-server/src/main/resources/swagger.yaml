@@ -1,0 +1,540 @@
+---
+openapi: 3.0.0
+info:
+  title: Seasam Door Locker
+  description: Seasam Door Locker API
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/seasam/seasam/1.0.0
+- url: /
+tags:
+- name: thing
+  description: Basically it's a door
+- name: user
+  description: Operations about user
+paths:
+  /things:
+    get:
+      tags:
+      - thing
+      summary: Get all things
+      operationId: readAll
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Thing'
+    post:
+      tags:
+      - thing
+      summary: Add a new thing to the store
+      operationId: create
+      requestBody:
+        $ref: '#/components/requestBodies/Thing'
+      responses:
+        201:
+          description: Created
+  '/things/{id}':
+    get:
+      tags:
+      - thing
+      summary: Find thing by ID
+      description: Returns a single thing
+      operationId: readOne
+      parameters:
+      - name: id
+        in: path
+        description: ID of thing to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Thing not found
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - thing
+      summary: Deletes a thing
+      operationId: delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Thing not found
+  /user:
+    get:
+      tags:
+      - user
+      summary: Get all users
+      operationId: readAll
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: Create user.
+      operationId: create
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: Created
+  '/users/{username}':
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      operationId: getUserByName
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+    put:
+      tags:
+      - user
+      summary: Updated user
+      description: Update user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be updated
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        400:
+          description: Invalid user supplied
+        404:
+          description: User not found
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+  '/users/{id}':
+    get:
+      tags:
+      - user
+      summary: Get user by id
+      operationId: getUserById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+    put:
+      tags:
+      - user
+      summary: Updated user
+      description: Update user.
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        description: name that need to be updated
+        required: true
+        schema:
+          type: object
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        400:
+          description: Invalid user supplied
+        404:
+          description: User not found
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Invalid username supplied
+        404:
+          description: User not found
+  '/users/{id}/device':
+    get:
+      tags:
+      - Device
+      summary: Get all user's devices
+      operationId: getAllDevices
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+    post:
+      tags:
+      - Device
+      summary: Create device
+      description: Create device.
+      operationId: createDevice
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Created device object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        201:
+          description: Created
+  '/users/{userId}/devices/{deviceId}':
+    get:
+      tags:
+      - device
+      summary: Get device by id and userId
+      operationId: getDeviceById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        400:
+          description: Invalid parameter supplied
+        404:
+          description: Device not found
+    put:
+      tags:
+      - device
+      summary: Updated user's device
+      description: Update device.
+      operationId: updateDevice
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Updated device object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        400:
+          description: Invalid device supplied
+        404:
+          description: Device not found
+    delete:
+      tags:
+      - device
+      summary: Delete device
+      operationId: deleteDevice
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Invalid deviceId supplied
+        404:
+          description: Device not found
+  '/users/{id}/permissions':
+    get:
+      tags:
+      - Permissions
+      summary: Get all user's permissions
+      operationId: getAllPermissions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Permission'
+    post:
+      tags:
+      - Permissions
+      summary: Create permission
+      description: Create permission.
+      operationId: createPermission
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Created device object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        201:
+          description: Created
+  '/accesses/{thingId}':
+    get:
+      tags:
+      - Accesses
+      summary: Get all accesses by thingId
+      operationId: getAllAccessesByThingId
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Access'
+    post:
+      tags:
+      - Accesses
+      summary: Create access
+      description: Create access.
+      operationId: createAccess
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Created access object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Access'
+        required: true
+      responses:
+        201:
+          description: Created
+  
+components:
+  schemas:
+    User:
+      required:
+      - email
+      - name
+      type: object
+      properties:
+        id:
+          type: object
+        name:
+          type: string
+        email:
+          type: string
+        secrets:
+          type: object
+        devices:
+          type: array
+          items:
+            type: object
+        permissions:
+          type: array
+          items:
+            type: object
+        status:
+          type: string
+        role:
+          type: string
+    Device:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        key: 
+          type: object
+    Permission:
+      properties:
+        thingId:
+          type: object
+        grantedBy:
+          type: object
+    Access: 
+      properties:
+        userId:
+          type: object
+        device:
+          type: object
+        permission:
+          type: object
+        timestamp:
+          type: object
+    Thing:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        accesses:
+          type: array
+          items:
+            type: object
+  requestBodies:
+    Thing:
+      description: Thing object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Thing'
+      required: true
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      required: true

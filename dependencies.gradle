@@ -22,6 +22,7 @@ ext {
             mockk: '1.7.15',
             mongoEmbedded: '2.0.3',
         ],
+        swagger_gen: '2.3.1'
     ]
 
     plg = [
@@ -33,6 +34,10 @@ ext {
         spring: [
             boot: "org.springframework.boot:spring-boot-gradle-plugin:${ver.spring.boot}",
         ],
+        
+        swagger: [
+            generator: "io.swagger:swagger-codegen:${ver.swagger_gen}"
+        ]
     ]
 
     lib = [
