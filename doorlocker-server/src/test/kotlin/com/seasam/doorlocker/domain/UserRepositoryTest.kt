@@ -27,4 +27,31 @@ internal class UserRepositoryTest {
         val actualPassenger = repo.findByEmailAndPassword(email, password).block()
         Assertions.assertEquals(expectedUser, actualPassenger)
     }
+
+    @Test
+    fun `UserRepository#deactivateUser ~ Deactivated user with given id `() {
+        val user = User(password = Password.create("ololo"), email = "email", name = "Name")
+
+        val savedUser = repo.save(user).block()!!
+        Assertions.assertEquals(UserStatus.ACTIVE, savedUser.status)
+
+        repo.deactivateUser(savedUser.id).block()
+
+        val deactivatedUser = repo.findById(savedUser.id).block()!!
+        Assertions.assertEquals(UserStatus.INACTIVE, deactivatedUser.status)
+    }
+
+    @Test
+    fun `UserRepository#activateUser ~ Activated user with given id `() {
+        val user = User(password = Password.create("ololo"), email = "email", name = "Name",
+            status = UserStatus.INACTIVE)
+
+        val savedUser = repo.save(user).block()!!
+        Assertions.assertEquals(UserStatus.INACTIVE, savedUser.status)
+
+        repo.activateUser(savedUser.id).block()
+
+        val activatedUser = repo.findById(savedUser.id).block()!!
+        Assertions.assertEquals(UserStatus.ACTIVE, activatedUser.status)
+    }
 }
