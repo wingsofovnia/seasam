@@ -5,15 +5,14 @@ import com.seasam.doorlocker.domain.ThingId
 import javax.validation.constraints.NotBlank
 
 data class ThingDto(
-    val id: ThingId?,
-    @NotBlank var name: String,
-    val accesses: Set<AccessDto>?) {
+    var id: ThingId?,
+    @NotBlank var name: String) {
 
     companion object {
-        fun from(t: Thing) = ThingDto(t.id, t.name, AccessDto.from(t.allAccesses))
+        fun from(t: Thing) = ThingDto(t.id, t.name)
 
         fun from(t: Collection<Thing>) = t.map { from(it) }
     }
 
-    fun asThing() = Thing(id ?: ThingId(), name, accesses?.map { it.asAccess() }?.toSet() ?: setOf())
+    fun asThing() = Thing(id ?: ThingId(), name)
 }

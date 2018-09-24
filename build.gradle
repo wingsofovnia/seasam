@@ -16,6 +16,7 @@ buildscript {
         classpath plg.kotlin.allopen
 
         classpath plg.spring.boot
+        classpath plg.openApi
     }
 }
 
