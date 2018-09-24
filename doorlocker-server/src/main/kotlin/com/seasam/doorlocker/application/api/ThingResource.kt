@@ -9,28 +9,36 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
-
 @Validated
 @RestController
 @RequestMapping("/api/things")
 class ThingResource(val repository: ThingRepository) {
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(@RequestBody dto: ThingDto) =
+    fun createThing(@RequestBody dto: ThingDto) =
         repository.save(dto.asThing())
             .map { ThingDto.from(it) }
             .map { ResponseEntity(it, HttpStatus.CREATED) }
 
-    @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun readOne(@PathVariable id: ThingId) =
-        repository.findById(id)
+    @GetMapping("/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getOneThing(@PathVariable thingId: ThingId) =
+        repository.findById(thingId)
             .map { ThingDto.from(it) }
             .map { ResponseEntity.ok(it) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun readAll() = repository.findAll().map { ThingDto.from(it) }
+    fun getAllThings() = repository.findAll().map { ThingDto.from(it) }
 
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: ThingId) = repository.deleteById(id)
+    @PutMapping("/{thingId}", consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun updateThing(@PathVariable thingId: ThingId, @RequestBody dto: ThingDto) =
+        repository.save(dto.apply { id = thingId }.asThing())
+            .map { ThingDto.from(it) }
+            .map { ResponseEntity(it, HttpStatus.OK) }
+
+    @DeleteMapping("/{thingId}")
+    fun deleteThing(@PathVariable thingId: ThingId) =
+        repository.deleteById(thingId)
+            .map { ResponseEntity.status(HttpStatus.NO_CONTENT).build<Void>() }
 }

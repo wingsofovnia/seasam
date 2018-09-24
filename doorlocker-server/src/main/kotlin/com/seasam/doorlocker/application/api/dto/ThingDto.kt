@@ -5,7 +5,7 @@ import com.seasam.doorlocker.domain.ThingId
 import javax.validation.constraints.NotBlank
 
 data class ThingDto(
-    val id: ThingId?,
+    var id: ThingId?,
     @NotBlank var name: String) {
 
     companion object {
