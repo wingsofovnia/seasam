@@ -6,17 +6,7 @@ import javax.validation.constraints.NotBlank
 @Document
 class Thing(
     val id: ThingId = ThingId(),
-    @NotBlank var name: String,
-    accesses: Set<Access> = setOf()) {
-
-    private val accesses: MutableSet<Access> = mutableSetOf()
-    val allAccesses: Set<Access> = accesses.toSet()
-
-    init {
-        this.accesses.addAll(accesses)
-    }
-
-    fun recordAccess(access: Access) = accesses.add(access)
+    @NotBlank var name: String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
