@@ -317,7 +317,7 @@ paths:
           description: 'Forbidden'
         500:
           description: 'Internal server error, please contact support'
-  '/users/{userId}/devices/{deviceId}':
+  '/users/{userId}/devices/{deviceKey}':
     get:
       tags:
       - devices
@@ -329,14 +329,14 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/UserId'
-      - name: deviceId
+      - name: deviceKey
         in: path
         required: true
         schema:
           type: string
       responses:
         200:
-          description: Device with given ID of given User
+          description: Device with given key of given User
           content:
             application/json:
               schema:
@@ -346,44 +346,7 @@ paths:
         403:
           description: 'Forbidden'
         404:
-          description: 'Unable to find User Device by given Device ID or User ID'
-        500:
-          description: 'Internal server error, please contact support'
-    put:
-      tags:
-      - devices
-      summary: Update User Device
-      operationId: updateUserDevice
-      parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/UserId'
-      - name: deviceId
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeviceDto'
-        required: true
-      responses:
-        200:
-          description: Updated Device
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeviceDto'
-        401:
-          description: 'Bad Request'
-        403:
-          description: 'Forbidden'
-        404:
-          description: 'Unable to find User Device by given Device ID or User ID'
+          description: 'Unable to find User Device by given Device key or User ID'
         500:
           description: 'Internal server error, please contact support'
     delete:
@@ -397,7 +360,7 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/UserId'
-      - name: deviceId
+      - name: deviceKey
         in: path
         required: true
         schema:
@@ -410,7 +373,7 @@ paths:
         403:
           description: 'Forbidden'
         404:
-          description: 'Unable to find User Device by given Device ID or User ID'
+          description: 'Unable to find User Device by given Device key or User ID'
         500:
           description: 'Internal server error, please contact support'
   '/users/{userId}/permissions':
