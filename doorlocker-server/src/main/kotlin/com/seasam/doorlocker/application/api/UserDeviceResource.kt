@@ -12,26 +12,26 @@ import reactor.core.publisher.Mono
 @Validated
 @RestController
 @RequestMapping("/api/users")
-class DeviceResource {
+class UserDeviceResource {
 
 
     @PostMapping("/{userId}/devices", produces = [MediaType.APPLICATION_JSON_VALUE],
         consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun createUserDevice(@PathVariable userId: UserId, @RequestBody dto: DeviceDto) =
-        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<DeviceDto>> HttpStatus.CREATED
+        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<DeviceDto>> HttpStatus.CREATED
 
 
     @GetMapping("/{userId}/devices/{deviceKey}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getOneUserDevice(@PathVariable userId: UserId, @PathVariable dto: String) =
-        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // <Mono<ResponseEntity<DeviceDto>> HttpStatus.OK
+        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<DeviceDto>> HttpStatus.OK
 
 
     @GetMapping("/{userId}/devices", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllUserDevices(@PathVariable userId: UserId) =
-        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // Flux<DeviceDto> HttpStatus.OK
+        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<DeviceDto> HttpStatus.OK
 
 
     @DeleteMapping("/{userId}/devices/{deviceKey}")
     fun deleteUserDevice(@PathVariable userId: UserId, @PathVariable deviceKey: String) =
-        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
+        Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
 }

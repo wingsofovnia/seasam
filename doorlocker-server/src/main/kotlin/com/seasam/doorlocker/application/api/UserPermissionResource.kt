@@ -13,19 +13,19 @@ import reactor.core.publisher.Mono
 @Validated
 @RestController
 @RequestMapping("/api/users")
-class PermissionResource {
+class UserPermissionResource {
 
     @PostMapping("/{userId}/permissions/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createUserPermission(@PathVariable userId: UserId, @PathVariable thingId: ThingId) =
-        Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<DeviceDto>> HttpStatus.CREATED
+        Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<DeviceDto>> HttpStatus.CREATED
 
 
     @GetMapping("/{userId}/permissions", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllUserPermissions(@PathVariable userId: UserId, @RequestParam(required = false) thingId: ThingId) =
-        Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // Flux<PermissionDto> HttpStatus.OK
+        Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<PermissionDto> HttpStatus.OK
 
 
     @DeleteMapping("/{userId}/permissions/{thingId}")
     fun deleteUserPermission(@PathVariable userId: UserId, @PathVariable thingId: ThingId) =
-        Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
+        Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
 }

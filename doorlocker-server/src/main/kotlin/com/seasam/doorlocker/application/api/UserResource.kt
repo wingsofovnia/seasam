@@ -16,26 +16,26 @@ class UserResource {
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createUser(@RequestBody dto: UserDto) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<UserDto>> HttpStatus.CREATED
+        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.CREATED
 
 
     @GetMapping("/{userId}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getOneUser(@PathVariable userId: UserId) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // <Mono<ResponseEntity<UserDto>> HttpStatus.OK
+        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.OK
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllUsers() =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // Flux<UserDto> HttpStatus.OK
+        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<UserDto> HttpStatus.OK
 
     @PutMapping("/{userId}", consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateUser(@PathVariable userId: UserId, @RequestBody dto: UserDto) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // <Mono<ResponseEntity<UserDto>> HttpStatus.OK
+        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.OK
 
 
     @DeleteMapping("/{userId}")
     fun deleteUser(@PathVariable userId: UserId) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
+        Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
 
 
 }

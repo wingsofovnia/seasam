@@ -22,5 +22,5 @@ class AccessResource {
     fun getAllAccesses(@RequestParam(required = false) thingId: ThingId,
                        @RequestParam(required = false) userId: UserId,
                        @RequestParam(required = false) period: String) =
-        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // Flux<DeviceDto> HttpStatus.OK
+        Mono.just(ResponseEntity<DeviceDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<DeviceDto> HttpStatus.OK
 }
