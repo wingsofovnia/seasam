@@ -1,7 +1,9 @@
 package com.seasam.doorlocker.application.api
 
+import com.seasam.doorlocker.application.api.dto.ThingDto
 import com.seasam.doorlocker.application.api.dto.UserDto
 import com.seasam.doorlocker.domain.UserId
+import com.seasam.doorlocker.domain.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -12,30 +14,37 @@ import reactor.core.publisher.Mono
 @Validated
 @RestController
 @RequestMapping("/api/users")
-class UserResource {
+class UserResource(val repository: UserRepository) {
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createUser(@RequestBody dto: UserDto) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.CREATED
-
+        repository.save(dto.asUser())
+            .map { UserDto.from(it) }
+            .map { ResponseEntity(it, HttpStatus.CREATED) }
 
     @GetMapping("/{userId}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getOneUser(@PathVariable userId: UserId) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.OK
+        repository.findById(userId)
+            .map { UserDto.from(it) }
+            .map { ResponseEntity.ok(it) }
+            .defaultIfEmpty(ResponseEntity.notFound().build())
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAllUsers() =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<UserDto> HttpStatus.OK
+    fun getAllUsers() = repository.findAll().map { UserDto.from(it) }
+
 
     @PutMapping("/{userId}", consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateUser(@PathVariable userId: UserId, @RequestBody dto: UserDto) =
-        Mono.just(ResponseEntity<UserDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<UserDto>> HttpStatus.OK
+        repository.save(dto.apply { id = userId }.asUser())
+            .map { UserDto.from(it) }
+            .map { ResponseEntity(it, HttpStatus.OK) }
 
 
     @DeleteMapping("/{userId}")
     fun deleteUser(@PathVariable userId: UserId) =
-        Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
+        repository.deactivateUser(userId)
+            .map { ResponseEntity.status(HttpStatus.NO_CONTENT).build<Void>() }
 
 
 }
