@@ -19,7 +19,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Thing'
+                  $ref: '#/components/schemas/ThingDto'
         401:
           description: 'Bad Request'
         403:
@@ -35,14 +35,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Thing'
+              $ref: '#/components/schemas/ThingDto'
       responses:
         201:
           description: Thing created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Thing'
+                $ref: '#/components/schemas/ThingDto'
         401:
           description: 'Bad Request'
         403:
@@ -61,14 +61,14 @@ paths:
         description: ID of Thing to fetch
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       responses:
         200:
           description: Thing with given ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Thing'
+                $ref: '#/components/schemas/ThingDto'
         401:
           description: 'Bad Request'
         403:
@@ -87,12 +87,12 @@ paths:
         in: path
         required: true
         schema:
-          type: object
+          $ref: '#/components/schemas/ThingId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Thing'
+              $ref: '#/components/schemas/ThingDto'
         required: true
       responses:
         200:
@@ -100,7 +100,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Thing'
+                $ref: '#/components/schemas/ThingDto'
         401:
           description: 'Bad Request'
         403:
@@ -120,7 +120,7 @@ paths:
         description: ID of Thing to delete
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       responses:
         204:
           description: 'Thing was deleted successfully'
@@ -132,7 +132,7 @@ paths:
           description: 'Unable to find Thing by given ID'
         500:
           description: 'Internal server error, please contact support'
-  /user:
+  /users:
     get:
       tags:
       - users
@@ -146,7 +146,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserDto'
         401:
           description: 'Bad Request'
         403:
@@ -162,7 +162,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserDto'
         required: true
       responses:
         201:
@@ -170,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserDto'
         401:
           description: 'Bad Request'
         403:
@@ -188,14 +188,14 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       responses:
         200:
           description: User with given ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserDto'
         401:
           description: 'Bad Request'
         403:
@@ -214,12 +214,12 @@ paths:
         in: path
         required: true
         schema:
-          type: object
+          $ref: '#/components/schemas/UserId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserDto'
         required: true
       responses:
         200:
@@ -227,7 +227,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserDto'
         401:
           description: 'Bad Request'
         403:
@@ -246,7 +246,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       responses:
         204:
           description: 'User was deleted successfully'
@@ -269,7 +269,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       responses:
         200:
           description: A list of all User Devices
@@ -278,7 +278,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Device'
+                  $ref: '#/components/schemas/DeviceDto'
         401:
           description: 'Bad Request'
         403:
@@ -295,12 +295,12 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Device'
+              $ref: '#/components/schemas/DeviceDto'
         required: true
       responses:
         201:
@@ -310,7 +310,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Device'
+                  $ref: '#/components/schemas/DeviceDto'
         401:
           description: 'Bad Request'
         403:
@@ -328,7 +328,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: deviceId
         in: path
         required: true
@@ -340,7 +340,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/DeviceDto'
         401:
           description: 'Bad Request'
         403:
@@ -359,7 +359,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: deviceId
         in: path
         required: true
@@ -369,7 +369,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Device'
+              $ref: '#/components/schemas/DeviceDto'
         required: true
       responses:
         200:
@@ -377,7 +377,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Device'
+                $ref: '#/components/schemas/DeviceDto'
         401:
           description: 'Bad Request'
         403:
@@ -396,7 +396,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: deviceId
         in: path
         required: true
@@ -424,13 +424,13 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: thingId
         in: query
         required: false
         description: Filters User Permission by given Thing ID
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       responses:
         200:
           description: A list of all User Permissions
@@ -439,7 +439,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Permission'
+                  $ref: '#/components/schemas/PermissionDto'
         401:
           description: 'Bad Request'
         403:
@@ -457,19 +457,19 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: thingId
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       responses:
         201:
           description: Permission created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Permission'
+                $ref: '#/components/schemas/PermissionDto'
         401:
           description: 'Bad Request'
         403:
@@ -488,12 +488,12 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: thingId
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       responses:
         204:
           description: 'Permission was deleted successfully'
@@ -516,12 +516,12 @@ paths:
         in: query
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/ThingId'
       - name: userId
         in: query
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/UserId'
       - name: period
         in: query
         required: false
@@ -536,7 +536,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Access'
+                  $ref: '#/components/schemas/AccessDto'
         401:
           description: 'Bad Request'
         403:
@@ -558,7 +558,13 @@ components:
         - USER
         - ADMIN
         - SUPERUSER
-    User:
+    UserId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    UserDto:
       type: object
       properties:
         id:
@@ -577,34 +583,47 @@ components:
         devices:
           type: array
           items:
-            $ref: '#/components/schemas/Device'
+            $ref: '#/components/schemas/DeviceDto'
         permissions:
           type: array
           items:
-            $ref: '#/components/schemas/Permission'
+            $ref: '#/components/schemas/PermissionDto'
         status:
           $ref: '#/components/schemas/UserStatus'
         role:
           $ref: '#/components/schemas/UserRole'
-    Device:
+    DeviceDto:
       type: object
       properties:
         name:
           type: string
         key:
+          $ref: '#/components/schemas/DeviceKeyDto'
+    DeviceKeyDto:
+      type: object
+      properties:
+        alg:
+          type: string
+        key:
           type: string
           description: Base64 encoded Public Key
-    Permission:
+    PermissionDto:
       type: object
       properties:
         thingId:
-          type: object
+          type: string
         grantedBy:
-          type: object
+          type: string
         timestamp:
           type: string
           format: datetime
-    Access:
+    AccessId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    AccessDto:
       type: object
       properties:
         id:
@@ -613,13 +632,19 @@ components:
         userId:
           type: string
         device:
-          $ref: '#/components/schemas/Device'
+          $ref: '#/components/schemas/DeviceDto'
         permission:
-          $ref: '#/components/schemas/Permission'
+          $ref: '#/components/schemas/PermissionDto'
         timestamp:
           type: string
           format: datetime
-    Thing:
+    ThingId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    ThingDto:
       type: object
       properties:
         id:
