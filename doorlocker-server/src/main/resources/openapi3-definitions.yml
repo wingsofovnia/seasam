@@ -182,7 +182,7 @@ paths:
       tags:
       - users
       summary: Gets User by ID
-      operationId: getUserById
+      operationId: getOneUser
       parameters:
       - name: userId
         in: path
