@@ -8,7 +8,7 @@ import com.seasam.doorlocker.domain.credentials.password.Password
 import javax.validation.constraints.NotBlank
 
 data class UserDto(
-    val id: UserId?,
+    var id: UserId?,
     @NotBlank val name: String,
     @NotBlank val email: String,
     val password: String?,
