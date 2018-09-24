@@ -322,7 +322,7 @@ paths:
       tags:
       - devices
       summary: Get User Device by Device and User IDs
-      operationId: getUserDeviceById
+      operationId: getOneUserDevice
       parameters:
       - name: userId
         in: path
