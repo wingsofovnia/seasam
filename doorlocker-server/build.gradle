@@ -1,4 +1,5 @@
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.openapi.generator'
 
 dependencies {
     implementation lib.spring.boot.webflux
@@ -6,6 +7,26 @@ dependencies {
     implementation lib.jbcrypt
 
     testImplementation lib.test.spring.boot
+}
+
+openApiGenerate {
+    generatorName = "kotlin-spring"
+    inputSpec = "$projectDir/src/main/resources/openapi3-definitions.yml".toString()
+    outputDir = "$projectDir/src/generated".toString()
+    apiPackage = "com.seasam.doorlocker.application.api"
+    modelPackage = "com.seasam.doorlocker.application.api.dto"
+    generateModelDocumentation = false
+    generateApiDocumentation = false
+    apiFilesConstrainedTo = [""]
+    modelFilesConstrainedTo = [""]
+    supportingFilesConstrainedTo = [""]
+    configOptions = [
+        reactive         : true,
+        exceptionHandler : false,
+        gradleBuildFile  : false,
+        useBeanValidation: true,
+        dateLibrary      : "java8"
+    ]
 }
 
 bootJar {

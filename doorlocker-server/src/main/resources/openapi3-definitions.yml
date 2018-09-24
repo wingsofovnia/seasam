@@ -1,0 +1,617 @@
+---
+openapi: 3.0.0
+info:
+  title: Seasam Door Locker API
+  version: 0.0.1
+
+paths:
+  /things:
+    get:
+      tags:
+      - things
+      summary: Gets all Things
+      operationId: getAllThings
+      responses:
+        200:
+          description: A list of all Things
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ThingDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+    post:
+      tags:
+      - things
+      summary: Adds new Thing
+      operationId: createThing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThingDto'
+      responses:
+        201:
+          description: Thing created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThingDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+  '/things/{thingId}':
+    get:
+      tags:
+      - things
+      summary: Finds Thing by ID
+      operationId: getOneThing
+      parameters:
+      - name: thingId
+        in: path
+        description: ID of Thing to fetch
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        200:
+          description: Thing with given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThingDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find Thing by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+    put:
+      tags:
+      - things
+      summary: Updates Thing
+      operationId: updateThing
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThingDto'
+        required: true
+      responses:
+        200:
+          description: Updated Thing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThingDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find Thing by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+    delete:
+      tags:
+      - things
+      summary: Deletes Thing
+      operationId: deleteThing
+      parameters:
+      - name: thingId
+        in: path
+        description: ID of Thing to delete
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        204:
+          description: 'Thing was deleted successfully'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find Thing by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+  /users:
+    get:
+      tags:
+      - users
+      summary: Gets all Users
+      operationId: getAllUsers
+      responses:
+        200:
+          description: A list of all Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+    post:
+      tags:
+      - users
+      summary: Creates User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        201:
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users/{userId}':
+    get:
+      tags:
+      - users
+      summary: Gets User by ID
+      operationId: getOneUser
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        200:
+          description: User with given ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+    put:
+      tags:
+      - users
+      summary: Updates User
+      operationId: updateUser
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        200:
+          description: Updated User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+    delete:
+      tags:
+      - users
+      summary: Deletes User
+      operationId: deleteUser
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        204:
+          description: 'User was deleted successfully'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User by given ID'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users/{userId}/devices':
+    get:
+      tags:
+      - devices
+      summary: Gets all User Device
+      operationId: getAllUserDevices
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        200:
+          description: A list of all User Devices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+    post:
+      tags:
+      - devices
+      summary: Creates User Device
+      operationId: createUserDevice
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceDto'
+        required: true
+      responses:
+        201:
+          description: Device created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users/{userId}/devices/{deviceKey}':
+    get:
+      tags:
+      - devices
+      summary: Get User Device by Device and User IDs
+      operationId: getOneUserDevice
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: deviceKey
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Device with given key of given User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User Device by given Device key or User ID'
+        500:
+          description: 'Internal server error, please contact support'
+    delete:
+      tags:
+      - devices
+      summary: Delete User Device
+      operationId: deleteUserDevice
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: deviceKey
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: 'Device was deleted successfully'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User Device by given Device key or User ID'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users/{userId}/permissions':
+    get:
+      tags:
+      - permissions
+      summary: Gets all User Permission
+      operationId: getAllUserPermissions
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: thingId
+        in: query
+        required: false
+        description: Filters User Permission by given Thing ID
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        200:
+          description: A list of all User Permissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users/{userId}/permissions/{thingId}':
+    post:
+      tags:
+      - permissions
+      summary: Creates User Permission to Thing with given ID
+      operationId: createUserPermission
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        201:
+          description: Permission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User or Thing with given IDs'
+        500:
+          description: 'Internal server error, please contact support'
+    delete:
+      tags:
+      - permissions
+      summary: Delete User Permission to Thing with given ID
+      operationId: deleteUserPermission
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        204:
+          description: 'Permission was deleted successfully'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User or Thing with given IDs'
+        500:
+          description: 'Internal server error, please contact support'
+  '/accesses':
+    get:
+      tags:
+      - accesses
+      summary: Get all Accesses
+      operationId: getAllAccesses
+      parameters:
+      - name: thingId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      - name: period
+        in: query
+        required: false
+        description: 'Filters Accesses by given time interval (ISO 8601). Format `start_timestamp,end_timestamp` e.g. `?period=2018-09-24T08:00:00+00:00,2018-09-28T24:00:00+00:00`'
+        schema:
+          type: string
+      responses:
+        200:
+          description: A list of all Accesses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+
+components:
+  schemas:
+    UserStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - BLOCKED
+    UserRole:
+      type: string
+      enum:
+        - USER
+        - ADMIN
+        - SUPERUSER
+    UserId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          minLength: 3
+        email:
+          type: string
+          minLength: 3
+        password:
+          type: string
+          minLength: 3
+          writeOnly: true
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceDto'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionDto'
+        status:
+          $ref: '#/components/schemas/UserStatus'
+        role:
+          $ref: '#/components/schemas/UserRole'
+    DeviceDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          $ref: '#/components/schemas/DeviceKeyDto'
+    DeviceKeyDto:
+      type: object
+      properties:
+        alg:
+          type: string
+        key:
+          type: string
+          description: Base64 encoded Public Key
+    PermissionDto:
+      type: object
+      properties:
+        thingId:
+          type: string
+        grantedBy:
+          type: string
+        timestamp:
+          type: string
+          format: datetime
+    AccessId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    AccessDto:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        userId:
+          type: string
+        device:
+          $ref: '#/components/schemas/DeviceDto'
+        permission:
+          $ref: '#/components/schemas/PermissionDto'
+        timestamp:
+          type: string
+          format: datetime
+    ThingId: # used only for request params
+      type: object
+      properties:
+        value:
+          type: string
+          format: uuid
+    ThingDto:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string

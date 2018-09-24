@@ -6,7 +6,7 @@ import com.seasam.doorlocker.domain.UserId
 import java.time.LocalDateTime
 
 data class AccessDto(
-    val id: AccessId?,
+    var id: AccessId?,
     val userId: UserId,
     val device: DeviceDto,
     val permission: PermissionDto,

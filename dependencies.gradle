@@ -14,6 +14,8 @@ ext {
             inmemory: '2.1.1',
         ],
 
+        openApi: '3.2.3',
+
         test: [
             junit: [
                 jupiter: '5.1.0',
@@ -33,6 +35,8 @@ ext {
         spring: [
             boot: "org.springframework.boot:spring-boot-gradle-plugin:${ver.spring.boot}",
         ],
+
+        openApi: "org.openapitools:openapi-generator-gradle-plugin:${ver.openApi}",
     ]
 
     lib = [
