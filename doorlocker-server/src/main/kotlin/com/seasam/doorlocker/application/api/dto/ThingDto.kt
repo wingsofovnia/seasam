@@ -16,3 +16,5 @@ data class ThingDto(
 
     fun asThing() = Thing(id ?: ThingId(), name)
 }
+
+fun Thing.asDto() = ThingDto.from(this)

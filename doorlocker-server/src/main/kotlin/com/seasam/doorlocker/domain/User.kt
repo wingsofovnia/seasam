@@ -35,7 +35,6 @@ class User(
 
     fun removeDevice(device: Device) = devices.remove(device)
 
-
     fun addPermission(permission: Permission) = permissions.add(permission)
 
     fun findPermission(thingId: ThingId) = permissions.find { it.thingId == thingId }
