@@ -31,8 +31,11 @@ fun <T> created(body: T?, at: Any, vararg args: Any?): ResponseEntity<T> {
     if (at !is kotlin.jvm.internal.FunctionReference)
         throw IllegalArgumentException("FunctionReference is expected")
 
-    val referenceMethodName = at.javaClass.getDeclaredMethod("getName").invoke(at) as String
-    val referenceClass = at.javaClass.getDeclaredMethod("getOwner").invoke(at) as KClass<*>
+    val fuRefMethodNameGetter = at.javaClass.getDeclaredMethod("getName").apply { isAccessible = true }
+    val referenceMethodName = fuRefMethodNameGetter.invoke(at) as String
+
+    val fuRefMethodOwnerClassGetter = at.javaClass.getDeclaredMethod("getOwner").apply { isAccessible = true }
+    val referenceClass = fuRefMethodOwnerClassGetter.invoke(at) as KClass<*>
 
     val argsTypes = args.mapNotNull { it?.javaClass }.toTypedArray()
     val method = referenceClass.java.getDeclaredMethod(referenceMethodName, *argsTypes)
