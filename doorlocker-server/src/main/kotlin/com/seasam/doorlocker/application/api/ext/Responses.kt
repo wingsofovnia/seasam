@@ -1,7 +1,5 @@
 package com.seasam.doorlocker.application.api.ext
 
-import com.seasam.doorlocker.application.api.ThingResource
-import com.seasam.doorlocker.domain.ThingId
 import org.springframework.hateoas.mvc.ControllerLinkBuilder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -43,13 +41,6 @@ fun <T> created(body: T?, at: Any, vararg args: Any?): ResponseEntity<T> {
     return ResponseEntity.created(uri).body<T>(body)
 }
 
-fun <T> ok(body: T) = ResponseEntity.ok<T>(body)
+fun <T> ok(body: T) = ResponseEntity.ok(body)
 
 fun noContent() = ResponseEntity.status(HttpStatus.NO_CONTENT).build<Void>()
-
-fun main(args: Array<String>) {
-    val thingId = ThingId()
-    println(thingId)
-    println(thingId.toString())
-    println(created<Any>(null, ThingResource::getOneThing, thingId).headers["Location"])
-}
