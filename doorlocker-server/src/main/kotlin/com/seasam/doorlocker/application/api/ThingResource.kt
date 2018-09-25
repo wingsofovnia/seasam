@@ -10,10 +10,8 @@ import com.seasam.doorlocker.domain.Thing
 import com.seasam.doorlocker.domain.ThingId
 import com.seasam.doorlocker.domain.ThingRepository
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import reactor.core.publisher.Mono
 
 @Validated
 @RestController
@@ -27,7 +25,7 @@ class ThingResource(val repository: ThingRepository) {
             .map { created(it, ThingResource::getOneThing, it.id) }
 
     @GetMapping("/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getOneThing(@PathVariable thingId: ThingId): Mono<ResponseEntity<ThingDto>> =
+    fun getOneThing(@PathVariable thingId: ThingId) =
         repository.findById(thingId)
             .map(Thing::asDto)
             .map { ok(it) }
