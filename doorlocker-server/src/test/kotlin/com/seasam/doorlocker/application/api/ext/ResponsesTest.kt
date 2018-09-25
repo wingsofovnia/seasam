@@ -16,10 +16,13 @@ internal class ResponsesTest {
 
         @GetMapping("/tests/{testId}")
         fun getTest(@PathVariable testId: UUID) {}
+
+        @GetMapping("/tests/{testId}/{superTestId}")
+        fun getTestMultiple(@PathVariable testId: UUID, @PathVariable superTestId: UUID) {}
     }
 
     @Test
-    fun `#create(Any, Any (FunctionReference), vararg Any?) ~ ControllerLinkBuilder#linkTo`() {
+    fun `#create(Any, Any (FunctionReference), Any?) ~ ControllerLinkBuilder#linkTo`() {
         val testId = UUID.randomUUID()
 
         val responseEntity = created(null, TestController::getTest, testId)
@@ -27,6 +30,21 @@ internal class ResponsesTest {
 
         val getTestMethod = TestController::class.java.getMethod("getTest", UUID::class.java)
         val expectedUri = linkTo(getTestMethod, testId).toString()
+
+        Assertions.assertEquals(expectedUri, actualUri)
+    }
+
+    @Test
+    fun `#create(Any, Any (FunctionReference), vararg Any?) ~ ControllerLinkBuilder#linkTo`() {
+        val testId = UUID.randomUUID()
+        val superTestId = UUID.randomUUID()
+
+        val responseEntity = created(null, TestController::getTestMultiple, testId, superTestId)
+        val actualUri = responseEntity.headers["Location"]!!.first()
+
+        val getTestMethod = TestController::class.java
+            .getMethod("getTestMultiple", UUID::class.java, UUID::class.java)
+        val expectedUri = linkTo(getTestMethod, testId, superTestId).toString()
 
         Assertions.assertEquals(expectedUri, actualUri)
     }
