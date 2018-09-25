@@ -18,3 +18,5 @@ data class PermissionDto(
 
     fun asPermission() = Permission(thingId, grantedBy)
 }
+
+fun Permission.asDto() = PermissionDto.from(this)

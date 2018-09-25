@@ -1,6 +1,8 @@
 package com.seasam.doorlocker.application.api
 
 import com.seasam.doorlocker.application.api.dto.ThingDto
+import com.seasam.doorlocker.application.api.dto.asDto
+import com.seasam.doorlocker.domain.Thing
 import com.seasam.doorlocker.domain.ThingId
 import com.seasam.doorlocker.domain.ThingRepository
 import org.springframework.http.HttpStatus
@@ -17,24 +19,24 @@ class ThingResource(val repository: ThingRepository) {
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createThing(@RequestBody dto: ThingDto) =
         repository.save(dto.asThing())
-            .map { ThingDto.from(it) }
+            .map(Thing::asDto)
             .map { ResponseEntity(it, HttpStatus.CREATED) }
 
     @GetMapping("/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getOneThing(@PathVariable thingId: ThingId) =
         repository.findById(thingId)
-            .map { ThingDto.from(it) }
+            .map(Thing::asDto)
             .map { ResponseEntity.ok(it) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAllThings() = repository.findAll().map { ThingDto.from(it) }
+    fun getAllThings() = repository.findAll().map(Thing::asDto)
 
     @PutMapping("/{thingId}", consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateThing(@PathVariable thingId: ThingId, @RequestBody dto: ThingDto) =
         repository.save(dto.apply { id = thingId }.asThing())
-            .map { ThingDto.from(it) }
+            .map(Thing::asDto)
             .map { ResponseEntity(it, HttpStatus.OK) }
 
     @DeleteMapping("/{thingId}")

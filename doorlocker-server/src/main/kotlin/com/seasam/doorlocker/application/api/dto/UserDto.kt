@@ -29,3 +29,5 @@ data class UserDto(
         permissions?.map { it.asPermission() }?.toSet() ?: setOf(),
         status ?: UserStatus.ACTIVE, role ?: UserRole.USER)
 }
+
+fun User.asDto() = UserDto.from(this)

@@ -1,6 +1,7 @@
 package com.seasam.doorlocker.application.api
 
-import com.seasam.doorlocker.application.api.dto.AccessDto
+import com.seasam.doorlocker.application.api.dto.asDto
+import com.seasam.doorlocker.domain.Access
 import com.seasam.doorlocker.domain.AccessRepository
 import com.seasam.doorlocker.domain.ThingId
 import com.seasam.doorlocker.domain.UserId
@@ -20,5 +21,5 @@ class AccessResource(val repository: AccessRepository) {
     fun getAllAccesses(@RequestParam(required = false) thingId: ThingId,
                        @RequestParam(required = false) userId: UserId,
                        @RequestParam(required = false) period: String) =
-        repository.findAll().map { AccessDto.from(it) }
+        repository.findAll().map(Access::asDto)
 }

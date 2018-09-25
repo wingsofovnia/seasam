@@ -14,3 +14,5 @@ data class DeviceDto(
 
     fun asDevice() = Device(name, key.asPublicKey())
 }
+
+fun Device.asDto() = DeviceDto.from(this)
