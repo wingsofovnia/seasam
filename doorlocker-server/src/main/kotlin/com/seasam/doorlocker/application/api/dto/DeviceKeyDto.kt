@@ -21,3 +21,5 @@ data class DeviceKeyDto(
         return keyFactory.generatePublic(keySpec)
     }
 }
+
+fun PublicKey.asDto() = DeviceKeyDto.from(this)

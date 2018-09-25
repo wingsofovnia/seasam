@@ -25,7 +25,7 @@ internal class PasswordTest {
     }
 
     @Test
-    fun `Password#create === PasswordEncoder#encode`() {
+    fun `#create ~ PasswordEncoder#encode`() {
         val passwordRaw = "mypassword"
         val password = Password.create(passwordRaw, encoderMock)
 
@@ -34,7 +34,7 @@ internal class PasswordTest {
     }
 
     @Test
-    fun `Password#matches === PasswordEncoder#maches`() {
+    fun `#matches ~ PasswordEncoder#maches`() {
         val passwordRaw = "mypassword"
         val password = Password.create(from = passwordRaw, encoder = encoderMock)
 
@@ -43,14 +43,14 @@ internal class PasswordTest {
     }
 
     @Test
-    fun `String#toPassword === Password#create`() {
+    fun `String#toPassword ~ Password#create`() {
         val passwordRaw = "mypassword"
 
         assertEquals(Password.create(passwordRaw, encoderMock), passwordRaw.toPassword(encoderMock))
     }
 
     @Test
-    fun `String#matches === Password#matches`() {
+    fun `String#matches ~ Password#matches`() {
         val passwordRaw = "mypassword"
         val password = Password.create(passwordRaw, encoderMock)
 

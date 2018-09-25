@@ -21,3 +21,5 @@ data class AccessDto(
 
     fun asAccess() = Access(id ?: AccessId(), userId, device.asDevice(), permission.asPermission())
 }
+
+fun Access.asDto() = AccessDto.from(this)
