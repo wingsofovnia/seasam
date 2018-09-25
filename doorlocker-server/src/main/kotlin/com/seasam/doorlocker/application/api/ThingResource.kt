@@ -2,14 +2,18 @@ package com.seasam.doorlocker.application.api
 
 import com.seasam.doorlocker.application.api.dto.ThingDto
 import com.seasam.doorlocker.application.api.dto.asDto
+import com.seasam.doorlocker.application.api.ext.created
+import com.seasam.doorlocker.application.api.ext.noContent
+import com.seasam.doorlocker.application.api.ext.notFound
+import com.seasam.doorlocker.application.api.ext.ok
 import com.seasam.doorlocker.domain.Thing
 import com.seasam.doorlocker.domain.ThingId
 import com.seasam.doorlocker.domain.ThingRepository
-import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Mono
 
 @Validated
 @RestController
@@ -20,14 +24,14 @@ class ThingResource(val repository: ThingRepository) {
     fun createThing(@RequestBody dto: ThingDto) =
         repository.save(dto.asThing())
             .map(Thing::asDto)
-            .map { ResponseEntity(it, HttpStatus.CREATED) }
+            .map { created(it, ThingResource::getOneThing, it.id) }
 
     @GetMapping("/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getOneThing(@PathVariable thingId: ThingId) =
+    fun getOneThing(@PathVariable thingId: ThingId): Mono<ResponseEntity<ThingDto>> =
         repository.findById(thingId)
             .map(Thing::asDto)
-            .map { ResponseEntity.ok(it) }
-            .defaultIfEmpty(ResponseEntity.notFound().build())
+            .map { ok(it) }
+            .defaultIfEmpty(notFound())
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllThings() = repository.findAll().map(Thing::asDto)
@@ -37,10 +41,10 @@ class ThingResource(val repository: ThingRepository) {
     fun updateThing(@PathVariable thingId: ThingId, @RequestBody dto: ThingDto) =
         repository.save(dto.apply { id = thingId }.asThing())
             .map(Thing::asDto)
-            .map { ResponseEntity(it, HttpStatus.OK) }
+            .map { ok(it) }
 
     @DeleteMapping("/{thingId}")
     fun deleteThing(@PathVariable thingId: ThingId) =
         repository.deleteById(thingId)
-            .map { ResponseEntity.status(HttpStatus.NO_CONTENT).build<Void>() }
+            .map { noContent() }
 }
