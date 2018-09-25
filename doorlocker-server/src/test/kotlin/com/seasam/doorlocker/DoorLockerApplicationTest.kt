@@ -7,10 +7,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
-class DoorLockerApplicationTests {
+class DoorLockerApplicationTest {
 
     @Test
-    fun contextLoads() {
+    fun `Loads Context without errors`() {
     }
 
 }

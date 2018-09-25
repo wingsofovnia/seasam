@@ -18,7 +18,7 @@ internal class UserRepositoryTest {
     lateinit var repo: UserRepository
 
     @Test
-    fun `UserRepository#findByUsernameAndPassword ~ User with given username & password`() {
+    fun `#findByUsernameAndPassword ~ User with given username & password`() {
         val email = "email"
         val password = Password.create("ololo")
         val expectedUser = User(password = password, email = email, name = "Name")
@@ -29,7 +29,7 @@ internal class UserRepositoryTest {
     }
 
     @Test
-    fun `UserRepository#deactivateUser ~ Deactivated user with given id `() {
+    fun `#deactivateUser ~ Deactivated user with given id `() {
         val user = User(password = Password.create("ololo"), email = "email", name = "Name")
 
         val savedUser = repo.save(user).block()!!
@@ -42,7 +42,7 @@ internal class UserRepositoryTest {
     }
 
     @Test
-    fun `UserRepository#activateUser ~ Activated user with given id `() {
+    fun `#activateUser ~ Activated user with given id `() {
         val user = User(password = Password.create("ololo"), email = "email", name = "Name",
             status = UserStatus.INACTIVE)
 

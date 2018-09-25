@@ -14,7 +14,7 @@ internal class BCryptPasswordEncoderTest {
     }
 
     @Test
-    fun `BCryptPasswordEncoder#encode ~ hash not equals to raw password`() {
+    fun `#encode ~ hash not equals to raw password`() {
         val passwordRaw = "mypassword"
         val password = Password.create(passwordRaw, bCryptEncoder)
 
@@ -22,7 +22,7 @@ internal class BCryptPasswordEncoderTest {
     }
 
     @Test
-    fun `BCryptPasswordEncoder#matches ~ true with origin password`() {
+    fun `#matches ~ true with origin password`() {
         val passwordRaw = "mypassword"
         val password = Password.create(passwordRaw, bCryptEncoder)
 
@@ -30,7 +30,7 @@ internal class BCryptPasswordEncoderTest {
     }
 
     @Test
-    fun `BCryptPasswordEncoder#matches ~ false with a substring of origin password`() {
+    fun `#matches ~ false with a substring of origin password`() {
         val passwordRaw = "mypassword"
         val password = Password.create(passwordRaw, bCryptEncoder)
 
