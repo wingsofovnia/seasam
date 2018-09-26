@@ -4,7 +4,8 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import java.net.URI
-import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
+import kotlin.reflect.jvm.javaMethod
 
 fun <T> notFound() = ResponseEntity.notFound().build<T>()
 
@@ -27,20 +28,8 @@ fun <T> created(body: T?, at: URI) = ResponseEntity.created(at).body(body)
  * @return [ResponseEntity] with 201 CREATED status, given body
  * and Location header set
  */
-fun <T> created(body: T?, at: Any, vararg args: Any?): ResponseEntity<T> {
-    if (at !is kotlin.jvm.internal.FunctionReference)
-        throw IllegalArgumentException("FunctionReference is expected")
-
-    val fuRefMethodNameGetter = at.javaClass.getDeclaredMethod("getName").apply { isAccessible = true }
-    val referenceMethodName = fuRefMethodNameGetter.invoke(at) as String
-
-    val fuRefMethodOwnerClassGetter = at.javaClass.getDeclaredMethod("getOwner").apply { isAccessible = true }
-    val referenceClass = fuRefMethodOwnerClassGetter.invoke(at) as KClass<*>
-
-    val argsTypes = args.mapNotNull { it?.javaClass }.toTypedArray()
-    val method = referenceClass.java.getDeclaredMethod(referenceMethodName, *argsTypes)
-    val uri = ControllerLinkBuilder.linkTo(method, *args).toUri()
-
+fun <T> created(body: T?, at: KFunction<*>, vararg args: Any?): ResponseEntity<T> {
+    val uri = ControllerLinkBuilder.linkTo(at.javaMethod, *args).toUri()
     return ResponseEntity.created(uri).body<T>(body)
 }
 
