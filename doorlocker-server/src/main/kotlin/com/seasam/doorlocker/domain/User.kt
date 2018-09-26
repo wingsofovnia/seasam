@@ -29,9 +29,13 @@ class User(
 
     fun addDevice(device: Device) = devices.add(device)
 
-    fun findDevice(deviceKey: PublicKey) = devices.find { it.key == deviceKey }
+    fun findDevice(key: PublicKey) = devices.find { it.key == key }
 
-    fun removeDevice(deviceKey: PublicKey) = devices.removeIf { it.key == deviceKey }
+    fun hasDevice(key: PublicKey) = findDevice(key) != null
+
+    fun hasDevice(device: Device) = findDevice(device.key) != null
+
+    fun removeDevice(key: PublicKey) = devices.removeIf { it.key == key }
 
     fun removeDevice(device: Device) = devices.remove(device)
 
@@ -39,7 +43,7 @@ class User(
 
     fun findPermission(thingId: ThingId) = permissions.find { it.thingId == thingId }
 
-    infix fun hasPermission(thingId: ThingId) = findPermission(thingId) != null
+    fun hasPermission(thingId: ThingId) = findPermission(thingId) != null
 
     fun removePermission(thingId: ThingId) = permissions.removeIf { it.thingId == thingId }
 
