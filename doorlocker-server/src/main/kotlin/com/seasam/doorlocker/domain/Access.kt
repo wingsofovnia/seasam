@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 class Access(
     val id: AccessId = AccessId(),
 
-    val userId: UserId,
     val device: Device,
     val permission: Permission) {
 

@@ -44,7 +44,7 @@ class UserDeviceResource(val repository: UserRepository) {
     @GetMapping("/{userId}/devices", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllUserDevices(@PathVariable userId: UserId) =
         repository.findActiveById(userId)
-            .map { it.allDevices }
+            .map { it.devices }
             .map { it.map { it.asDto() } } // no flatMapIterable s.t. it won't defaultIfEmpty for users with no devices
             .map { ok(it) }
             .defaultIfEmpty(notFound())
