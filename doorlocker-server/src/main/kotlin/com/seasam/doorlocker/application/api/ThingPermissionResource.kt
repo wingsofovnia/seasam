@@ -12,20 +12,20 @@ import reactor.core.publisher.Mono
 
 @Validated
 @RestController
-@RequestMapping("/api/users")
-class UserPermissionResource {
+@RequestMapping("/api/things")
+class ThingPermissionResource {
 
-    @PostMapping("/{userId}/permissions/{thingId}", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun createUserPermission(@PathVariable userId: UserId, @PathVariable thingId: ThingId) =
+    @PostMapping("/{thingId}/permissions/{userId}", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun createThingPermission(@PathVariable thingId: ThingId, @PathVariable userId: UserId) =
         Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<DeviceDto>> HttpStatus.CREATED
 
 
-    @GetMapping("/{userId}/permissions", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getAllUserPermissions(@PathVariable userId: UserId, @RequestParam(required = false) thingId: ThingId) =
+    @GetMapping("/{thingId}/permissions", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getAllThingPermissions(@PathVariable thingId: ThingId) =
         Mono.just(ResponseEntity<PermissionDto>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Flux<PermissionDto> HttpStatus.OK
 
 
-    @DeleteMapping("/{userId}/permissions/{thingId}")
-    fun deleteUserPermission(@PathVariable userId: UserId, @PathVariable thingId: ThingId) =
+    @DeleteMapping("/{thingId}/permissions/{userId}")
+    fun deleteThingPermission(@PathVariable thingId: ThingId, @PathVariable userId: UserId) =
         Mono.just(ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED)) // TODO: Mono<ResponseEntity<Void>> HttpStatus.NO_CONTENT
 }
