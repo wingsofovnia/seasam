@@ -4,6 +4,7 @@ import com.seasam.doorlocker.application.api.dto.UserDto
 import com.seasam.doorlocker.application.api.dto.asDto
 import com.seasam.doorlocker.application.api.ext.created
 import com.seasam.doorlocker.application.api.ext.noContent
+import com.seasam.doorlocker.application.api.ext.notFound
 import com.seasam.doorlocker.application.api.ext.ok
 import com.seasam.doorlocker.domain.User
 import com.seasam.doorlocker.domain.UserId
@@ -46,4 +47,5 @@ class UserResource(val repository: UserRepository) {
     fun deleteUser(@PathVariable userId: UserId) =
         repository.deactivateUser(userId)
             .map { noContent() }
+            .defaultIfEmpty(notFound())
 }

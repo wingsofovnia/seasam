@@ -6,12 +6,14 @@ import com.seasam.doorlocker.application.api.ext.created
 import com.seasam.doorlocker.application.api.ext.noContent
 import com.seasam.doorlocker.application.api.ext.notFound
 import com.seasam.doorlocker.application.api.ext.ok
+import com.seasam.doorlocker.domain.Device
 import com.seasam.doorlocker.domain.UserId
 import com.seasam.doorlocker.domain.UserRepository
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
 import java.security.PublicKey
@@ -37,7 +39,7 @@ class UserDeviceResource(val repository: UserRepository) {
     fun getOneUserDevice(@PathVariable userId: UserId, @PathVariable deviceKey: PublicKey) =
         repository.findActiveById(userId)
             .flatMap { it.findDevice(deviceKey)?.toMono() }
-            .map { it.asDto() }
+            .map(Device::asDto)
             .map { ok(it) }
             .defaultIfEmpty(notFound())
 
@@ -45,8 +47,8 @@ class UserDeviceResource(val repository: UserRepository) {
     fun getAllUserDevices(@PathVariable userId: UserId) =
         repository.findActiveById(userId)
             .map { it.devices }
-            .map { it.map { it.asDto() } } // no flatMapIterable s.t. it won't defaultIfEmpty for users with no devices
-            .map { ok(it) }
+            .map { it.map(Device::asDto) }
+            .map { ok(Flux.fromIterable(it)) }
             .defaultIfEmpty(notFound())
 
     @DeleteMapping("/{userId}/devices/{deviceKey}")

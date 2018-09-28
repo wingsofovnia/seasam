@@ -45,4 +45,5 @@ class ThingResource(val repository: ThingRepository) {
     fun deleteThing(@PathVariable thingId: ThingId) =
         repository.deleteById(thingId)
             .map { noContent() }
+            .defaultIfEmpty(notFound())
 }
