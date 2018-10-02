@@ -11,7 +11,7 @@ class Thing(
     @Value("#root._permissions") permissions: Set<Permission> = setOf()) {
 
     private val _permissions: MutableSet<Permission> = mutableSetOf()
-    val permissions: Set<Permission> get() = permissions.toSet()
+    val permissions: Set<Permission> get() = _permissions.toSet()
 
     init {
         this._permissions.addAll(permissions)
