@@ -38,7 +38,7 @@ class UserDeviceResource(val repository: UserRepository) {
     @GetMapping("/{userId}/devices/{deviceKey}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getOneUserDevice(@PathVariable userId: UserId, @PathVariable deviceKey: PublicKey) =
         repository.findActiveById(userId)
-            .flatMap { it.findDevice(deviceKey)?.toMono() }
+            .flatMap { it.findDevice(deviceKey)?.toMono() ?: Mono.empty()}
             .map(Device::asDto)
             .map { ok(it) }
             .defaultIfEmpty(notFound())
