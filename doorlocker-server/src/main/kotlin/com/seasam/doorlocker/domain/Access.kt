@@ -7,8 +7,9 @@ import java.time.LocalDateTime
 class Access(
     val id: AccessId = AccessId(),
 
-    val device: Device,
-    val permission: Permission) {
+    val thingId: ThingId,
+    val permission: Permission,
+    val device: Device) {
 
     val timestamp: LocalDateTime = LocalDateTime.now()
 
