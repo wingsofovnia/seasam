@@ -9,6 +9,8 @@ import kotlin.reflect.jvm.javaMethod
 
 fun <T> notFound() = ResponseEntity.notFound().build<T>()
 
+fun <T> created(body: T) = ResponseEntity(body, HttpStatus.CREATED)
+
 fun <T> created(body: T?, at: URI) = ResponseEntity.created(at).body(body)
 
 /**

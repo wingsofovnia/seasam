@@ -5,7 +5,7 @@ info:
   version: 0.0.1
 
 paths:
-  /things:
+  '/things':
     get:
       tags:
       - things
@@ -132,7 +132,93 @@ paths:
           description: 'Unable to find Thing by given ID'
         500:
           description: 'Internal server error, please contact support'
-  /users:
+  '/things/{thingId}/permissions':
+    get:
+      tags:
+      - permissions
+      summary: Gets all Permission
+      operationId: getAllThingPermissions
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      responses:
+        200:
+          description: A list of all Permissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        500:
+          description: 'Internal server error, please contact support'
+  '/things/{thingId}/permissions/{userId}':
+    post:
+      tags:
+      - permissions
+      summary: Creates User Permission to Thing with given ID
+      operationId: createThingPermission
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        201:
+          description: Permission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionDto'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User or Thing with given IDs'
+        500:
+          description: 'Internal server error, please contact support'
+    delete:
+      tags:
+      - permissions
+      summary: Delete User Permission to Thing with given ID
+      operationId: deleteThingPermission
+      parameters:
+      - name: thingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ThingId'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        204:
+          description: 'Permission was deleted successfully'
+        401:
+          description: 'Bad Request'
+        403:
+          description: 'Forbidden'
+        404:
+          description: 'Unable to find User or Thing with given IDs'
+        500:
+          description: 'Internal server error, please contact support'
+  '/users':
     get:
       tags:
       - users
@@ -381,7 +467,7 @@ paths:
       tags:
       - permissions
       summary: Gets all User Permission
-      operationId: getAllUserPermissions
+      operationId: getAllThingPermissions
       parameters:
       - name: userId
         in: path
@@ -414,7 +500,7 @@ paths:
       tags:
       - permissions
       summary: Creates User Permission to Thing with given ID
-      operationId: createUserPermission
+      operationId: createThingPermission
       parameters:
       - name: userId
         in: path
@@ -445,7 +531,7 @@ paths:
       tags:
       - permissions
       summary: Delete User Permission to Thing with given ID
-      operationId: deleteUserPermission
+      operationId: deleteThingPermission
       parameters:
       - name: userId
         in: path
@@ -547,10 +633,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DeviceDto'
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/PermissionDto'
         status:
           $ref: '#/components/schemas/UserStatus'
         role:
@@ -573,9 +655,7 @@ components:
     PermissionDto:
       type: object
       properties:
-        thingId:
-          type: string
-        grantedBy:
+        userId:
           type: string
         timestamp:
           type: string
@@ -615,3 +695,7 @@ components:
           readOnly: true
         name:
           type: string
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionDto'

@@ -1,7 +1,9 @@
 package com.seasam.doorlocker.domain
 
 import com.seasam.doorlocker.domain.credentials.password.Password
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.Field
 import java.security.PublicKey
 import javax.validation.constraints.NotBlank
 
@@ -11,43 +13,29 @@ class User(
     @NotBlank var name: String,
     @NotBlank var email: String,
     var password: Password,
-    devices: Set<Device> = setOf(),
-    permissions: Set<Permission> = setOf(),
+    @Value("#root._devices") devices: Set<Device> = setOf(),
     var status: UserStatus = UserStatus.ACTIVE,
     var role: UserRole = UserRole.USER) {
 
-    private val devices: MutableSet<Device> = mutableSetOf()
-    val allDevices: Set<Device> get() = devices.toSet()
+    private val _devices: MutableSet<Device> = mutableSetOf()
 
-    private val permissions: MutableSet<Permission> = mutableSetOf()
-    val allPermissions: Set<Permission> get() = permissions.toSet()
+    val devices: Set<Device> get() = _devices.toSet()
 
     init {
-        this.devices.addAll(devices)
-        this.permissions.addAll(permissions)
+        this._devices.addAll(devices)
     }
 
-    fun addDevice(device: Device) = devices.add(device)
+    fun addDevice(device: Device) = _devices.add(device)
 
-    fun findDevice(key: PublicKey) = devices.find { it.key == key }
+    fun findDevice(key: PublicKey) = _devices.find { it.key == key }
 
     fun hasDevice(key: PublicKey) = findDevice(key) != null
 
     fun hasDevice(device: Device) = findDevice(device.key) != null
 
-    fun removeDevice(key: PublicKey) = devices.removeIf { it.key == key }
+    fun removeDevice(key: PublicKey) = _devices.removeIf { it.key == key }
 
-    fun removeDevice(device: Device) = devices.remove(device)
-
-    fun addPermission(permission: Permission) = permissions.add(permission)
-
-    fun findPermission(thingId: ThingId) = permissions.find { it.thingId == thingId }
-
-    fun hasPermission(thingId: ThingId) = findPermission(thingId) != null
-
-    fun removePermission(thingId: ThingId) = permissions.removeIf { it.thingId == thingId }
-
-    fun removePermission(permission: Permission) = permissions.remove(permission)
+    fun removeDevice(device: Device) = _devices.remove(device)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
