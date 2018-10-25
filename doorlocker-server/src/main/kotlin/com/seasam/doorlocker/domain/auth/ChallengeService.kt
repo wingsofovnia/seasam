@@ -2,36 +2,31 @@ package com.seasam.doorlocker.domain.auth
 
 import org.springframework.stereotype.Service
 import java.security.PublicKey
+import java.security.Signature
 import java.util.*
-import javax.crypto.Cipher
 
 @Service
-class ChallengeService {
+class ChallengeService(val nonceSize: Int = 128,
+                       val signatureAlg: String = "SHA1withRSA") {
 
     private val nonces = HashMap<PublicKey, ByteArray>()
 
-    fun generateChallenge(deviceKey: PublicKey): ByteArray {
-        val nonce = randomBytes(CHALLENGE_SIZE_BYTES)
+    fun generateNonce(deviceKey: PublicKey): ByteArray {
+        val nonce = randomBytes(nonceSize)
         nonces[deviceKey] = nonce
         return nonce
     }
 
-    fun checkSolution(deviceKey: PublicKey, solution: ByteArray): Boolean {
-        val cipher = Cipher.getInstance(deviceKey.algorithm)
-        cipher.init(Cipher.PUBLIC_KEY, deviceKey)
-
-        val actualNonce = cipher.doFinal(solution)
+    fun verifyNonceSignature(deviceKey: PublicKey, signature: ByteArray): Boolean {
         val expectedNonce = nonces.remove(deviceKey) ?: return false
 
-        return expectedNonce contentEquals actualNonce
-    }
+        val sig = Signature.getInstance(signatureAlg).apply {
+            initVerify(deviceKey)
+            update(expectedNonce)
+        }
 
-    internal fun forgetNonces() = nonces.clear()
+        return sig.verify(signature)
+    }
 
     private fun randomBytes(size: Int) = ByteArray(size).apply { Random().nextBytes(this) }
-
-
-    companion object {
-        const val CHALLENGE_SIZE_BYTES = 128
-    }
 }

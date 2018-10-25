@@ -24,7 +24,7 @@ class AuthorizationResource(private val authorizationService: AuthorizationServi
 
     @GetMapping("/challenges/{deviceKey}", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun getChallenge(@RequestParam deviceKey: PublicKey): String {
-        val challengeBytes = challengeService.generateChallenge(deviceKey)
+        val challengeBytes = challengeService.generateNonce(deviceKey)
         return Base64.getEncoder().encodeToString(challengeBytes)
     }
 
@@ -33,13 +33,8 @@ class AuthorizationResource(private val authorizationService: AuthorizationServi
         val (deviceKey, thingId, solutionBase64) = authorizationRequest
         val solution = Base64.getDecoder().decode(solutionBase64)
 
-        try {
-            if (!challengeService.checkSolution(deviceKey, solution))
-                return Mono.just(unauthorized())
-        } catch (e: Exception) {
-            //TODO: log, improve error response
+        if (!challengeService.verifyNonceSignature(deviceKey, solution))
             return Mono.just(unauthorized())
-        }
 
         return authorizationService.authorize(deviceKey, thingId)
             .map { it.asDto() }
