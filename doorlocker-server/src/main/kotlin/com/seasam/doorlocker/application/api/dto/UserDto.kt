@@ -13,20 +13,19 @@ data class UserDto(
     @NotBlank val email: String,
     val password: String?,
     val devices: Set<DeviceDto>?,
-    val permissions: Set<PermissionDto>?,
     val status: UserStatus?,
     val role: UserRole?) {
 
     companion object {
         fun from(u: User) = UserDto(u.id, u.name, u.email, null,
-            DeviceDto.from(u.allDevices), PermissionDto.from(u.allPermissions), u.status, u.role)
+            DeviceDto.from(u.devices), u.status, u.role)
 
         fun from(u: Collection<User>) = u.map { from(it) }
     }
 
     fun asUser() = User(id ?: UserId(), name, email, Password.create(password!!),
         devices?.map { it.asDevice() }?.toSet() ?: setOf(),
-        permissions?.map { it.asPermission() }?.toSet() ?: setOf(),
+
         status ?: UserStatus.ACTIVE, role ?: UserRole.USER)
 }
 

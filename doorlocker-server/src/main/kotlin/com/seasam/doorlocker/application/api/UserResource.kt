@@ -4,10 +4,13 @@ import com.seasam.doorlocker.application.api.dto.UserDto
 import com.seasam.doorlocker.application.api.dto.asDto
 import com.seasam.doorlocker.application.api.ext.created
 import com.seasam.doorlocker.application.api.ext.noContent
+import com.seasam.doorlocker.application.api.ext.notFound
 import com.seasam.doorlocker.application.api.ext.ok
 import com.seasam.doorlocker.domain.User
 import com.seasam.doorlocker.domain.UserId
 import com.seasam.doorlocker.domain.UserRepository
+import com.seasam.doorlocker.domain.credentials.password.Password
+import com.seasam.doorlocker.domain.credentials.password.toPassword
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -34,6 +37,12 @@ class UserResource(val repository: UserRepository) {
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getAllUsers() = repository.findAllActive().map(User::asDto)
 
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE], params = ["email", "password"])
+    fun getOneUserByCredentials(@RequestParam email: String, @RequestParam password: String) =
+        repository.findByEmailAndPassword(email, password.toPassword())
+            .map { ok(it) }
+            .defaultIfEmpty(ResponseEntity.notFound().build())
+
     @PutMapping("/{userId}", consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun updateUser(@PathVariable userId: UserId, @RequestBody dto: UserDto) =
@@ -46,4 +55,5 @@ class UserResource(val repository: UserRepository) {
     fun deleteUser(@PathVariable userId: UserId) =
         repository.deactivateUser(userId)
             .map { noContent() }
+            .defaultIfEmpty(notFound())
 }
