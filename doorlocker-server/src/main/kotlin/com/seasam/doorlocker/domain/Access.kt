@@ -1,6 +1,7 @@
 package com.seasam.doorlocker.domain
 
 import org.springframework.data.mongodb.core.mapping.Document
+import java.security.PublicKey
 import java.time.LocalDateTime
 
 @Document
@@ -9,7 +10,7 @@ class Access(
 
     val thingId: ThingId,
     val permission: Permission,
-    val device: Device) {
+    val deviceKey: PublicKey) {
 
     val timestamp: LocalDateTime = LocalDateTime.now()
 

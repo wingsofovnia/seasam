@@ -7,12 +7,16 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.security.PublicKey
 
 @Repository
 interface UserRepository : ReactiveCrudRepository<User, UserId> {
 
     @Query("{ 'email' : ?#{#email}, 'password.hash' : ?#{#password.hash}  }")
     fun findByEmailAndPassword(email: String, password: Password): Mono<User>
+
+    @Query("{ '_devices.key' : ?0 }")
+    fun findByDeviceKey(publicKey: PublicKey): Mono<User>
 
     fun findAllByStatus(status: UserStatus): Flux<User>
 

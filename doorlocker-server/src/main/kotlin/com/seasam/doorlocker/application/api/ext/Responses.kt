@@ -9,6 +9,10 @@ import kotlin.reflect.jvm.javaMethod
 
 fun <T> notFound() = ResponseEntity.notFound().build<T>()
 
+fun <T> unauthorized() = ResponseEntity<T>(HttpStatus.UNAUTHORIZED)
+
+fun <T> forbidden() = ResponseEntity<T>(HttpStatus.FORBIDDEN)
+
 fun <T> created(body: T) = ResponseEntity(body, HttpStatus.CREATED)
 
 fun <T> created(body: T?, at: URI) = ResponseEntity.created(at).body(body)
