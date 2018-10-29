@@ -20,6 +20,8 @@ interface UserRepository : ReactiveCrudRepository<User, UserId> {
 
     fun findAllByStatus(status: UserStatus): Flux<User>
 
+    fun findByEmail(email: String): Mono<User>
+
     @JvmDefault
     fun findAllActive(): Flux<User> = findAllByStatus(UserStatus.ACTIVE)
 
