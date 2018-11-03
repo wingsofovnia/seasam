@@ -1,4 +1,4 @@
-package com.seasam.doorlocker.domain.auth
+package com.seasam.doorlocker.application.security
 
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

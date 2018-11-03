@@ -1,7 +1,7 @@
-package com.seasam.doorlocker.application.config
+package com.seasam.doorlocker.application.security.config
 
-import com.seasam.doorlocker.domain.auth.AccountAuthenticationProvider
-import com.seasam.doorlocker.domain.auth.CustomUserDetailsService
+import com.seasam.doorlocker.application.security.AccountAuthenticationProvider
+import com.seasam.doorlocker.application.security.CustomUserDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
