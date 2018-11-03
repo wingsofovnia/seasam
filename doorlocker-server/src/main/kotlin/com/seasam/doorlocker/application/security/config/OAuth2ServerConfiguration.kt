@@ -1,6 +1,5 @@
-package com.seasam.doorlocker.application.config
+package com.seasam.doorlocker.application.security.config
 
-import com.seasam.doorlocker.domain.auth.CustomUserDetailsService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
-
 
 @Configuration
 class OAuth2ServerConfiguration {
@@ -42,26 +40,25 @@ class OAuth2ServerConfiguration {
     @EnableAuthorizationServer
     protected class AuthorizationServerConfiguration(private val jwtAccessTokenConverter: JwtAccessTokenConverter,
                                                      private val passwordEncoder: BCryptPasswordEncoder,
-                                                     private val authenticationManager: AuthenticationManager, private val customUserDetailsService: CustomUserDetailsService) : AuthorizationServerConfigurerAdapter() {
+                                                     private val authenticationManager: AuthenticationManager) : AuthorizationServerConfigurerAdapter() {
 
         @Throws(Exception::class)
         override fun configure(endpoints: AuthorizationServerEndpointsConfigurer?) {
             endpoints!!
                 .tokenStore(JwtTokenStore(jwtAccessTokenConverter))
                 .authenticationManager(authenticationManager)
-                .userDetailsService(customUserDetailsService)
                 .accessTokenConverter(jwtAccessTokenConverter)
         }
 
-//        @Throws(Exception::class)
-//        override fun configure(clients: ClientDetailsServiceConfigurer?) {
-//            clients!!
-//                .inMemory()
-//                .withClient("client")
-//                .secret(passwordEncoder.encode("secret"))
-//                .authorizedGrantTypes("password", "refresh_token")
-//                .scopes("read", "write")
-//        }
+        @Throws(Exception::class)
+        override fun configure(clients: ClientDetailsServiceConfigurer?) {
+            clients!!
+                .inMemory()
+                .withClient("client")
+                .secret(passwordEncoder.encode("secret"))
+                .authorizedGrantTypes("password", "refresh_token")
+                .scopes("read", "write")
+        }
 
     }
 }
