@@ -1,5 +1,6 @@
 package com.seasam.doorlocker.application.security
 
+import com.seasam.doorlocker.domain.credentials.password.Password
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider
@@ -16,7 +17,7 @@ class AccountAuthenticationProvider(private val userDetailsService: CustomUserDe
         if (token.credentials == null || userDetails.password == null) {
             throw BadCredentialsException("Credentials may not be null.")
         }
-        if (!passwordEncoder.matches(token.credentials as String, userDetails.password)) {
+        if (!Password.from(userDetails.password).matches(token.credentials.toString())) {
             throw BadCredentialsException("Invalid credentials.")
         }
     }
