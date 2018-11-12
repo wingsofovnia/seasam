@@ -36,7 +36,7 @@ internal class PasswordTest {
     @Test
     fun `#matches ~ PasswordEncoder#maches`() {
         val passwordRaw = "mypassword"
-        val password = Password.create(from = passwordRaw, encoder = encoderMock)
+        val password = Password.create(pwd = passwordRaw, encoder = encoderMock)
 
         assertTrue(password matches passwordRaw)
         verify(exactly = 1) { encoderMock.matches(passwordRaw, password.hash) }
