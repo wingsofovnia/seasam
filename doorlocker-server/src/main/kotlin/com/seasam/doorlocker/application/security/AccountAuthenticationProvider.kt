@@ -10,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
-class AccountAuthenticationProvider(private val userDetailsService: CustomUserDetailsService, private val passwordEncoder: PasswordEncoder) : AbstractUserDetailsAuthenticationProvider() {
+class AccountAuthenticationProvider(private val userDetailsService: CustomUserDetailsService,
+                                    private val passwordEncoder: PasswordEncoder) :
+    AbstractUserDetailsAuthenticationProvider() {
 
     override fun additionalAuthenticationChecks(userDetails: UserDetails, token: UsernamePasswordAuthenticationToken) {
         if (token.credentials == null || userDetails.password == null) {

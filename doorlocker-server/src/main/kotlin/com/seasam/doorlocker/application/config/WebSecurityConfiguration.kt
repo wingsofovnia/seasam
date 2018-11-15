@@ -1,7 +1,8 @@
-package com.seasam.doorlocker.application.security.config
+package com.seasam.doorlocker.application.config
 
 import com.seasam.doorlocker.application.security.AccountAuthenticationProvider
 import com.seasam.doorlocker.application.security.CustomUserDetailsService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -15,15 +16,19 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-class WebSecurityConfiguration(private val userDetailsService: CustomUserDetailsService, private val accountAuthenticationProvider: AccountAuthenticationProvider) : WebSecurityConfigurerAdapter() {
+class WebSecurityConfiguration(private val userDetailsService: CustomUserDetailsService,
+                               private val accountAuthenticationProvider: AccountAuthenticationProvider) :
+    WebSecurityConfigurerAdapter() {
+
+    @Value("\${app.security.signing-key}")
+    val signingKey: String? = ""
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth!!.userDetailsService<UserDetailsService>(userDetailsService)
+        auth.userDetailsService<UserDetailsService>(userDetailsService)
         auth.authenticationProvider(accountAuthenticationProvider)
     }
 
     @Bean
-    @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
     }
@@ -31,13 +36,8 @@ class WebSecurityConfiguration(private val userDetailsService: CustomUserDetails
     @Bean
     fun jwtAccessTokenConverter(): JwtAccessTokenConverter {
         val jwtAccessTokenConverter = JwtAccessTokenConverter()
-        jwtAccessTokenConverter.setSigningKey(SIGNING_KEY)
+        jwtAccessTokenConverter.setSigningKey(signingKey)
         return jwtAccessTokenConverter
-    }
-
-    companion object {
-
-        private val SIGNING_KEY = "s1f41234pwqdqkl4l12ghg9853123sd"
     }
 
 }

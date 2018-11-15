@@ -1,4 +1,4 @@
-package com.seasam.doorlocker.application.security.config
+package com.seasam.doorlocker.application.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -44,7 +44,7 @@ class OAuth2ServerConfiguration {
 
         @Throws(Exception::class)
         override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-            endpoints!!
+            endpoints
                 .tokenStore(JwtTokenStore(jwtAccessTokenConverter))
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter)
@@ -52,7 +52,7 @@ class OAuth2ServerConfiguration {
 
         @Throws(Exception::class)
         override fun configure(clients: ClientDetailsServiceConfigurer) {
-            clients!!
+            clients
                 .inMemory()
                 .withClient("client")
                 .secret(passwordEncoder.encode("secret"))
