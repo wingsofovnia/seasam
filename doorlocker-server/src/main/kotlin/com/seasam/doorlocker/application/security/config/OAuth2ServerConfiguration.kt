@@ -51,7 +51,7 @@ class OAuth2ServerConfiguration {
         }
 
         @Throws(Exception::class)
-        override fun configure(clients: ClientDetailsServiceConfigurer?) {
+        override fun configure(clients: ClientDetailsServiceConfigurer) {
             clients!!
                 .inMemory()
                 .withClient("client")
