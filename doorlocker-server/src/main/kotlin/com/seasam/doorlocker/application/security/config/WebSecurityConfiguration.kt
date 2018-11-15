@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfiguration(private val userDetailsService: CustomUserDetailsService, private val accountAuthenticationProvider: AccountAuthenticationProvider) : WebSecurityConfigurerAdapter() {
 
-    @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder?) {
         auth!!.userDetailsService<UserDetailsService>(userDetailsService)
         auth.authenticationProvider(accountAuthenticationProvider)
