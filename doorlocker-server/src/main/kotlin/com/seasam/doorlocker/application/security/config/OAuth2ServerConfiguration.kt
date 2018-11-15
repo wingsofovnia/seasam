@@ -21,7 +21,7 @@ class OAuth2ServerConfiguration {
     @EnableResourceServer
     protected class ResourceServerConfiguration(private val jwtAccessTokenConverter: JwtAccessTokenConverter) : ResourceServerConfigurerAdapter() {
 
-        override fun configure(resources: ResourceServerSecurityConfigurer?) {
+        override fun configure(resources: ResourceServerSecurityConfigurer) {
             resources!!
                 .tokenStore(JwtTokenStore(jwtAccessTokenConverter))
         }
