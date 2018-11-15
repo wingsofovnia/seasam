@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component
 @Component
 class AccountAuthenticationProvider(private val userDetailsService: CustomUserDetailsService, private val passwordEncoder: PasswordEncoder) : AbstractUserDetailsAuthenticationProvider() {
 
-    @Throws(AuthenticationException::class)
     override fun additionalAuthenticationChecks(userDetails: UserDetails, token: UsernamePasswordAuthenticationToken) {
         if (token.credentials == null || userDetails.password == null) {
             throw BadCredentialsException("Credentials may not be null.")
