@@ -53,6 +53,7 @@ internal class ChallengeServiceTest {
 
     @Test
     fun `#checkSolution ~ SignatureException for invalid signature`() {
+        challengeService.generateNonce(testPublicKeyOne)
         val invalidNonceSignatureForPublicKeyOne = UUID.randomUUID().toString().toByteArray()
 
         assertThrows<SignatureException> {
