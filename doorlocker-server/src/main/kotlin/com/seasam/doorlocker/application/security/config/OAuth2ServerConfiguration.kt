@@ -43,7 +43,7 @@ class OAuth2ServerConfiguration {
                                                      private val authenticationManager: AuthenticationManager) : AuthorizationServerConfigurerAdapter() {
 
         @Throws(Exception::class)
-        override fun configure(endpoints: AuthorizationServerEndpointsConfigurer?) {
+        override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
             endpoints!!
                 .tokenStore(JwtTokenStore(jwtAccessTokenConverter))
                 .authenticationManager(authenticationManager)
