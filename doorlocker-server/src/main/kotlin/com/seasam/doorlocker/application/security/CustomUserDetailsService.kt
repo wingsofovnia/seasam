@@ -1,7 +1,8 @@
 package com.seasam.doorlocker.application.security
 
 import com.seasam.doorlocker.domain.UserRepository
-import org.springframework.security.core.userdetails.User
+import com.seasam.doorlocker.domain.UserStatus
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -16,7 +17,25 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : Use
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByEmail(username).block()
-        return User(user?.email, user?.password.toString(), true, true, true, true, emptyList())
+            ?: throw UsernameNotFoundException("User with name $username not found.")
+        return SeasamUserDetails(user)
     }
 
+
+    private class SeasamUserDetails(private val user: com.seasam.doorlocker.domain.User) : UserDetails {
+
+        override fun isEnabled() = user.status == UserStatus.ACTIVE
+
+        override fun getUsername() = user.email
+
+        override fun isCredentialsNonExpired() = isEnabled
+
+        override fun getPassword() = user.password.toString()
+
+        override fun isAccountNonExpired() = isEnabled
+
+        override fun isAccountNonLocked() = user.status != UserStatus.BLOCKED
+
+        override fun getAuthorities() = listOf(SimpleGrantedAuthority(user.role.name))
+    }
 }
