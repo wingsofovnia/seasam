@@ -4,6 +4,7 @@ apply plugin: 'org.openapi.generator'
 dependencies {
     implementation lib.spring.boot.webflux
     implementation lib.spring.boot.mongodb
+    implementation lib.spring.boot.security
     implementation lib.jbcrypt
 
     testImplementation lib.test.spring.boot

@@ -53,6 +53,10 @@ ext {
                     "org.springframework.boot:spring-boot-starter-webflux:${ver.spring.boot}",
                     "org.springframework.boot:spring-boot-starter-hateoas:${ver.spring.boot}",
                 ],
+                security: [
+                    "org.springframework.boot:spring-boot-starter-security:${ver.spring.boot}",
+                    "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.5.RELEASE",
+                ],
                 mongodb: "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${ver.spring.boot}",
             ],
         ],

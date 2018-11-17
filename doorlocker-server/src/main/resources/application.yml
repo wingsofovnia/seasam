@@ -2,4 +2,11 @@ spring:
   application:
     name: seasam-doorlocker
 
+
   output.ansi.enabled: ALWAYS
+app:
+  security:
+    auth:
+      client: client
+      secret: secret
+    signing-key: c98da9b33367
