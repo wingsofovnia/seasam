@@ -1,9 +1,9 @@
 package com.seasam.doorlocker.application.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
@@ -22,7 +22,7 @@ class OAuth2ServerConfiguration {
     protected class ResourceServerConfiguration(private val jwtAccessTokenConverter: JwtAccessTokenConverter) : ResourceServerConfigurerAdapter() {
 
         override fun configure(resources: ResourceServerSecurityConfigurer) {
-            resources!!
+            resources
                 .tokenStore(JwtTokenStore(jwtAccessTokenConverter))
         }
 
@@ -39,8 +39,13 @@ class OAuth2ServerConfiguration {
     @Configuration
     @EnableAuthorizationServer
     protected class AuthorizationServerConfiguration(private val jwtAccessTokenConverter: JwtAccessTokenConverter,
-                                                     private val passwordEncoder: BCryptPasswordEncoder,
                                                      private val authenticationManager: AuthenticationManager) : AuthorizationServerConfigurerAdapter() {
+
+        @Value("\${app.security.auth.client}")
+        val client: String? = ""
+
+        @Value("\${app.security.auth.secret}")
+        val secret: String? = ""
 
         @Throws(Exception::class)
         override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
@@ -54,8 +59,8 @@ class OAuth2ServerConfiguration {
         override fun configure(clients: ClientDetailsServiceConfigurer) {
             clients
                 .inMemory()
-                .withClient("client")
-                .secret(passwordEncoder.encode("secret"))
+                .withClient(client)
+                .secret(secret)
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("read", "write")
         }

@@ -4,4 +4,9 @@ spring:
 
 
   output.ansi.enabled: ALWAYS
-app.security.signing-key: c98da9b33367
+app:
+  security:
+    auth:
+      client: client
+      secret: secret
+    signing-key: c98da9b33367
